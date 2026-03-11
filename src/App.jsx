@@ -1,9 +1,13 @@
-import { useState } from 'react';
+import FriendList from './components/FriendList';
+import AddFriend from './components/AddFriend';
+import BillSplit from './components/BillSplit';
 
-import './App.css';
-
-function App() {
-    return <></>;
+export default function App() {
+    return (
+        <div>
+            <FriendList />
+            <AddFriend />
+            <BillSplit />
+        </div>
+    );
 }
-
-export default App;
