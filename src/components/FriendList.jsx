@@ -1,6 +1,6 @@
 import '../index.css';
 
-export default function FriendList({ friends }) {
+export default function FriendList({ friends, onAddButton, modal }) {
     return (
         <ul className="sidebar">
             {friends.map((friend) => (
@@ -11,6 +11,13 @@ export default function FriendList({ friends }) {
                     key={friend.id}
                 />
             ))}
+            {!modal ? (
+                <button className="button" onClick={onAddButton}>
+                    Add Friend
+                </button>
+            ) : (
+                ''
+            )}
         </ul>
     );
 }

@@ -27,11 +27,37 @@ const initialFriends = [
 
 export default function App() {
     const [friends, setFriends] = useState(initialFriends);
+    const [modal, setModal] = useState(false);
+
+    function handleAddButton() {
+        setModal(true);
+    }
+    function handleClose() {
+        setModal(false);
+    }
+
+    //helper functionn
+
+    function handleName(e) {
+        setName(e.target.value);
+    }
+
+    //Add Friends Logic
+    function addFriend(newFriendObject) {
+        setFriends([...friends, newFriendObject]);
+    }
+
     return (
         <div className="app">
-            <FriendList friends={friends} />
+            <FriendList
+                friends={friends}
+                onAddButton={handleAddButton}
+                modal={modal}
+            />
             <BillSplit />
-            <AddFriend />
+            {modal === true ? (
+                <AddFriend onClose={handleClose} addFriend={addFriend} />
+            ) : null}
         </div>
     );
 }
