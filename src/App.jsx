@@ -29,6 +29,7 @@ export default function App() {
     const [friends, setFriends] = useState(initialFriends);
     const [modal, setModal] = useState(false);
     const [selectedFriend, setSelectedFriend] = useState(null);
+    const [updateFriend, setUpdateFriend] = useState(null);
 
     function handleAddButton() {
         setModal(true);
@@ -53,6 +54,21 @@ export default function App() {
     function handleSelect(friend) {
         setSelectedFriend(friend);
     }
+    function handleSplitBill(friendObject) {
+        setFriends(
+            friends.map((friend) =>
+                friend.id === friendObject.id
+                    ? {
+                          ...friend,
+                          balance:
+                              friendObject.payBill === 'you'
+                                  ? friend.balance + friendObject.friendExpense
+                                  : friend.balance - friendObject.yourExpense,
+                      }
+                    : friend
+            )
+        );
+    }
     return (
         <div className="app">
             <FriendList
@@ -64,7 +80,10 @@ export default function App() {
                 handleSelect={handleSelect}
             />
 
-            <BillSplit selectedFriend={selectedFriend} />
+            <BillSplit
+                selectedFriend={selectedFriend}
+                onSplitBill={handleSplitBill}
+            />
             {modal === true ? (
                 <AddFriend onClose={handleClose} addFriend={addFriend} />
             ) : null}
