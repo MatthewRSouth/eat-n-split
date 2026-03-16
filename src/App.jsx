@@ -28,12 +28,16 @@ const initialFriends = [
 export default function App() {
     const [friends, setFriends] = useState(initialFriends);
     const [modal, setModal] = useState(false);
+    const [selectedFriend, setSelectedFriend] = useState(null);
 
     function handleAddButton() {
         setModal(true);
     }
     function handleClose() {
         setModal(false);
+    }
+    function handleSplitBillClose() {
+        setSelectedFriend(null);
     }
 
     //helper functionn
@@ -46,15 +50,21 @@ export default function App() {
     function addFriend(newFriendObject) {
         setFriends([...friends, newFriendObject]);
     }
-
+    function handleSelect(friend) {
+        setSelectedFriend(friend);
+    }
     return (
         <div className="app">
             <FriendList
                 friends={friends}
                 onAddButton={handleAddButton}
                 modal={modal}
+                selectedFriend={selectedFriend}
+                onSplitBillClose={handleSplitBillClose}
+                handleSelect={handleSelect}
             />
-            <BillSplit />
+
+            <BillSplit selectedFriend={selectedFriend} />
             {modal === true ? (
                 <AddFriend onClose={handleClose} addFriend={addFriend} />
             ) : null}
